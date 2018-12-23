@@ -1,0 +1,10 @@
+[package]
+name = "ch3"
+version = "0.1.0"
+authors = ["Raoul Hidalgo Charman <raoul.hidalgo.charman@gmail.com>"]
+
+[dependencies]
+regex = "1"
+
+[profile.dev]
+opt-level = 3
