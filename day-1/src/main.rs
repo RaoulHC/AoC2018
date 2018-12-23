@@ -19,6 +19,10 @@ fn count(data : String) -> i32 {
     count
 }
 
+fn count_functional(data : String) -> i32 {
+    data.lines().filter_map(|s| s.parse::<i32>().ok()).sum::<i32>()
+}
+
 fn find_double(data : String) -> i32 {
     // find the first double repeating through the whole list.
     let mut map = HashMap::new();
@@ -56,9 +60,9 @@ fn main() {
     let mut data = String::new();
     f.read_to_string(&mut data)
         .expect("Something went wrong reading the file.");
+    let udata = data.clone();
 
-    let lines = data;
-
-    println!("count: {}", count(lines.clone()));
-    println!("first double: {}", find_double(lines.clone()));
+    println!("count: {}", count(udata.clone()));
+    println!("count_function: {}", count_functional(udata.clone()));
+    println!("first double: {}", find_double(udata.clone()));
 }
