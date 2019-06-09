@@ -55,15 +55,33 @@ fn count_double_claims(vec: &Vec<Vec<usize>>) -> usize {
     count
 }
 
+fn check_claim(claim: &Claim, vec: &Vec<Vec<usize>>) -> bool {
+    for i in claim.pos.x..(claim.pos.x+claim.size.x) {
+        for j in claim.pos.y..(claim.pos.y+claim.size.y) {
+            if vec[i][j] != 1 {
+                return false
+            }
+        }
+    }
+    true
+}
+
 fn main () {
     // check that parsing works
-    let claim = parse_claim("#1 @ 1,2: 4x4");
-    println!("Claim: {:?}", claim);
+    // let test_claim = parse_claim("#1 @ 1,2: 4x4");
+    // println!("Claim: {:?}", claim);
 
     let f = fs::read_to_string("input.txt").unwrap();
     let mut vec : Vec<Vec<usize>> = vec![vec![0; 1000]; 1000];
     for cl in f.lines() {
         update_array(parse_claim(cl), &mut vec);
     }
-    println!("Number of double claims: {}", count_double_claims(&vec))
+    println!("Number of double claims: {}", count_double_claims(&vec));
+
+    for cl in f.lines() {
+        let claim = parse_claim(cl);
+        if check_claim(&claim, &vec) {
+            println!("Claim id {} is pure!", claim.id);
+        }
+    }
 }
